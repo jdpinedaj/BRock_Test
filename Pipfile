@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pipreqs = "*"
+numpy = "==1.23.2"
+pandas = "==1.4.3"
+scikit-learn = "==1.1.2"
+joblib = "==1.1.0"
+uvicorn = {extras = ["standart"], version = "*"}
+fastapi = "*"
+pipfile = "*"
+
+[dev-packages]
+ipykernel = "*"
+autopep8 = "*"
+
+[requires]
+python_version = "3.8"
