@@ -6,6 +6,7 @@
 ## General
 
 This repository is associated with the Challenge described in this [link](https://github.com/jdpinedaj/BRock_Test/tree/master/document).
+It allows a user to upload a csv file, to select which models to use to fit a Stack model and to get the predictions of the Stack model by using a new observation.
 
 ### To run:
 
