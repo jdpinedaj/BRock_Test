@@ -14,3 +14,4 @@ COPY ./stacking.py ./
 COPY ./data ./data
 # do tests, usually better to do befor building container, e.g. travis, circelci
 RUN python test_stacking.py
+CMD ["uvicorn", "stacking:app", "--host", "0.0.0.0", "--port", "80"]

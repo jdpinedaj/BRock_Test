@@ -12,6 +12,7 @@ joblib = "==1.1.0"
 uvicorn = {extras = ["standart"], version = "*"}
 fastapi = "*"
 pipfile = "*"
+python-multipart = "*"
 
 [dev-packages]
 ipykernel = "*"
