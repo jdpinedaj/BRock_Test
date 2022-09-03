@@ -1,55 +1,43 @@
-# General
+# BlackRock ML Challenge
 
-This is the repository associated with the youtube tutorial at: TODO:
-It is very simplistic and is meant as a guideline for implementing a Machine Learning API and not necessarily a good Machine Learning algorithm.
-I put particular emphasis on making this tutorial as short as possible.
+![badge1](https://img.shields.io/badge/language-Python-blue.svg)
+![badge2](https://img.shields.io/badge/framework-FastAPI-brightgreen.svg)
 
-## To run:
+## General
 
-### Locally
+This repository is associated with the Challenge described in this [link](https://github.com/jdpinedaj/BRock_Test/tree/master/document).
 
-I recommend using docker below, but also works like this:
-`pip install -r requirements.txt`
-`cd TO/PATH`
+### To run:
+
+#### Locally
+
+The API can be run locally by executing the following command:
+
+`pip install pipenv`\
+`pipenv install --system --deploy --ignore-pipfile`\
+`pipenv shell`\
+`cd TO/PATH`\
 `uvicorn main:app --reload`
 
-### Using Docker
+#### Using Docker
 
-cd to the folder: `cd PATH/TO/MlApiTutorial`
-run docker: `docker-compose up --build`
+However, the API can also be run using Docker. To do so, the following commands must be executed:
 
-### Find Solution at
+cd to the folder: `cd PATH/TO/BRock_Test`
+run docker: `docker-compose up --build -d`
 
-recommended: go in browser to http://localhost/docs (Assuming your docker hosts there else check `docker ps` it's on port 80)
-you can test the API directly with GUI http://localhost/docs
-or sent to http://localhost/will_survive
+#### Find Solution at
 
-## For dev purposes
+Recommended: go in browser to http://localhost/docs (Assuming your docker hosts there, if not, check that `docker ps` it's on port 80).\
+After that, you can use the API directly with GUI http://localhost/docs
 
-tests: `python -m main`
-run server: `uvicorn stacking:app --reload`
+### Files
 
-## Troubleshoot
-
-find IP: `docker ps`
-
-## Files
-
-'main.py' holds the API-related code. We put all in one file to make project simpler.
-'test.py' has one test case to validate classifier is roughly working.
-'Dockerfile' configures the server and installs dependencies. I used the Uvicorn/FastApi
-'docker-compose.yml' not really needed. Simplifies execution on your side. I put restart: always incase you test edge cases (I did not handle them).
-'make_model.py' builds and selects a model. I did not validate them much since this is more of an API tutorial.
-
-## Test
-
-I implemented a test to integrate it.
-In practice running them in Travis, Circelci before pulling from GitHub would be better.
-
-## Deploy to a cloud
-
-Check docker related deployment possibilities of your favorite cloud provider
-
-## Data From
-
-Kaggle: https://www.kaggle.com/c/titanic-dataset/data
+`stacking.py` holds the API-related code.\
+`test_stacking.py` has test cases to validate model is working.\
+`Dockerfile` configures the server and installs dependencies. I used the Uvicorn/FastApi in this challenge.\
+`docker-compose.yml` simplifies the execution to deploy Docker.\
+`create_dataset.py` creates the toy dataset to test the implementation.\
+`Pipfile` and `Pipfile.lock` are used to manage dependencies.\
+`data` folder contains the toy dataset.\
+`model` folder contains the trained model.\

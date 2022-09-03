@@ -47,8 +47,8 @@ class stackingModel():
         meta_X = np.column_stack(
             model.predict(item) for model in self.models)
 
-        prediction = fitted_meta_model.predict(meta_X)
-        probability = fitted_meta_model.predict_proba(meta_X).max()
+        prediction = fitted_meta_model.predict(meta_X)[0]
+        probability = round(fitted_meta_model.predict_proba(meta_X).max(), 2)
 
         return prediction, probability
 
@@ -57,7 +57,7 @@ class stackingModel():
 #! TRAINING OF THE MODEL
 #! ###############################
 # Load data
-data = pd.read_csv("data/data.csv")
+data = pd.read_csv("./data/data.csv")
 y = data["survived"]
 X = data.drop("survived", axis=1)
 

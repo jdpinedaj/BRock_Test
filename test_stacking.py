@@ -12,7 +12,7 @@ class TestStackingModel(unittest.TestCase):
 
     def test_fit_models(self):
 
-        df = pd.read_csv("data/data.csv")
+        df = pd.read_csv("./data/data.csv")
         y = df["survived"]
         X = df.drop("survived", axis=1)
 
@@ -55,8 +55,8 @@ class TestStackingModel(unittest.TestCase):
             obj, fitted_model)
 
         # assert
-        self.assertIsInstance(prediction, int)
-        self.assertIsInstance(probability, np.ndarray)
+        self.assertIsInstance(prediction, np.int64)
+        self.assertIsInstance(probability, np.float64)
 
 
 if __name__ == "__main__":
