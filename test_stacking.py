@@ -9,8 +9,11 @@ from stacking import stackingModel, ObjectInformation
 
 
 class TestStackingModel(unittest.TestCase):
+    def test_upload_file(self):
+        df = pd.read_csv("./data/data.csv")
+        self.assertIsInstance(df, pd.DataFrame)
 
-    def test_fit_models(self):
+    def test_fit_and_predict_value(self):
 
         df = pd.read_csv("./data/data.csv")
         y = df["survived"]
@@ -19,44 +22,15 @@ class TestStackingModel(unittest.TestCase):
         # make models
         clf1 = GradientBoostingClassifier()
         clf2 = RandomForestClassifier()
-
-        # make meta model
         meta_clf = LogisticRegression()
 
         # make stacking model
-        stack = stackingModel([clf1, clf2], meta_clf)
+        stack = stackingModel
+        obj = ObjectInformation(x1=1, x2=2, x3=3, x4=4)
 
-        # fit
-        stack.fit_models(X, y)
+        probability = stack.fit_and_predict(clf1, clf2, meta_clf, df, obj)
 
-        # assert
-        self.assertIsInstance(stack, stackingModel)
-
-    def test_predict_value(self):
-
-        # data
-        data = pd.read_csv("data/data.csv")
-        y = data["survived"]
-        X = data.drop("survived", axis=1)
-
-        # make models
-
-        models = [GradientBoostingClassifier(), RandomForestClassifier()]
-        meta_model = LogisticRegression()
-        self.predictor = stackingModel(models, meta_model)
-
-        fitted_model = self.predictor.fit_models(X, y)
-
-        # Object to predict
-        obj = ObjectInformation(x1=11, x2=20, x3=3, x4=14)
-
-        # predict
-        prediction, probability = self.predictor.predict_value(
-            obj, fitted_model)
-
-        # assert
-        self.assertIsInstance(prediction, np.int64)
-        self.assertIsInstance(probability, np.float64)
+        self.assertIsInstance(probability, float)
 
 
 if __name__ == "__main__":
