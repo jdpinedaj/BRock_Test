@@ -8,16 +8,12 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 
-from fastapi import FastAPI, HTTPException, File, UploadFile, Depends
-
-from pydantic import BaseModel, conlist
-
+from fastapi import FastAPI, File, UploadFile, Depends
+from pydantic import BaseModel
 from enum import Enum
 
 
 # Classes
-
-
 class Classifier(str, Enum):
     lr = "lr"
     knn = "knn"
@@ -36,7 +32,7 @@ class ObjectInformation(BaseModel):
 data = pd.read_csv("./data/data.csv")
 
 
-class stackingModel:
+class StackingModel:
     """
     Implementation of the Stacking model from the paper.
     """
@@ -45,13 +41,15 @@ class stackingModel:
         """
         Upload file to the server.
         """
-
         df = pd.read_csv(file.file)
         file.file.close()
 
         return df
 
     def get_model_1(model1: Classifier):
+        """
+        Get the first model.
+        """
         if model1 == Classifier.lr:
             first_model = LogisticRegression()
         elif model1 == Classifier.knn:
@@ -68,6 +66,9 @@ class stackingModel:
         return first_model
 
     def get_model_2(model2: Classifier):
+        """
+        Get the second model.
+        """
         if model2 == Classifier.lr:
             second_model = LogisticRegression()
         elif model2 == Classifier.knn:
@@ -84,6 +85,9 @@ class stackingModel:
         return second_model
 
     def get_meta_model(meta_model: Classifier):
+        """
+        Get the meta model.
+        """
         if meta_model == Classifier.lr:
             last_model = LogisticRegression()
         elif meta_model == Classifier.knn:
@@ -165,12 +169,10 @@ print("Score:", score)
 print("REPORT:\n", classification_report(y_test, meta_model.predict(meta_X_test)))
 
 # Retraining model on entire data set
-
 for model in models:
     model.fit(X, y)
 
 meta_X = np.column_stack(model.predict(X) for model in models)
-
 fitted_meta_model = meta_model.fit(meta_X, y)
 
 
@@ -179,12 +181,17 @@ fitted_meta_model = meta_model.fit(meta_X, y)
 #! ###############################
 
 # Create the FastAPI app
-app = FastAPI()
-predictor = stackingModel
+app = FastAPI(
+    title="Stacking API", description="API for the Stacking model", version="v1"
+)
+predictor = StackingModel
 
 
 @app.get("/")
 def root():
+    """
+    Root of the API.
+    """
     return {"GoTo": "/docs"}
 
 
