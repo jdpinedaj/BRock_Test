@@ -1,0 +1,55 @@
+# GitHub Actions
+
+name: Deployment
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  schedule:
+    - cron: "0 15 5 * *"
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - id: repo
+        name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Installing python and running Jupyter Notebook using pipenv
+      - id: python
+        name: Python Setup & Packages Installation
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.8"
+          cache: "pipenv"
+      - run: |
+          pipx install pipenv
+          pipenv install
+
+
+      # Running tests with UnitTest
+      - name: Test with unittest
+        run: |
+          pipenv run python -m unittest test_stacking.py
+
+      # Deploying main app using uvicorn and FastAPI
+      - name: Run server in background
+        run: uvicorn main:app &
+
+      # Commit and push
+      - id: commit
+        name: Commit Results
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add .
+          git commit -m "Updated solution on $(date) with GitHub Actions"
+          git push origin development
+        env:
+          REPO_KEY: ${{secrets.GITHUB_TOKEN}}
+          username: github-actions
