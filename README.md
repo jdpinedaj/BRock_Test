@@ -42,3 +42,7 @@ After that, you can use the API directly with GUI http://localhost/docs
 `Pipfile` and `Pipfile.lock` are used to manage dependencies.\
 `data` folder contains the toy dataset.\
 `model` folder contains the trained model.\
+
+### Github Actions
+
+The deployment of the API is automated using Github Actions.\
