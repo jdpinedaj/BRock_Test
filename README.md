@@ -46,3 +46,5 @@ After that, you can use the API directly with GUI http://localhost/docs
 ### Github Actions
 
 The deployment of the API is automated using Github Actions.\
+It checks the code for errors and runs the test cases. Then, it checks that the API runs locally.\
+The code can be found in `.github/workflows/main.yml`
