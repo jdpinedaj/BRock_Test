@@ -39,17 +39,4 @@ jobs:
 
       # Deploying main app using uvicorn and FastAPI
       - name: Run server in background
-        run: uvicorn main:app &
-
-      # Commit and push
-      - id: commit
-        name: Commit Results
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add .
-          git commit -m "Updated solution on $(date) with GitHub Actions"
-          git push origin development
-        env:
-          REPO_KEY: ${{secrets.GITHUB_TOKEN}}
-          username: github-actions
+        run: pipenv run uvicorn stacking:app --host 0.0.0.0 --port 8000 &
